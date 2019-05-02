@@ -45,17 +45,24 @@
                         h.setText("successCallback : window.plugins.smsLog.requestReadPermission");
                         footer.setColorText(vueApp.colorText.green[5]);
 
-                        setTimeout(function() {
+                        setInterval(function() {
                             h.setText("execute : getSmsLog");
                             footer.setColorText(vueApp.colorText.cyan[12]);
                             let filters = [{
-                                "name": "address",
-                                "value": "20300",
+                                "name": "body",
+                                "value": "StartProcess",
                                 "operator": "==",
                             }];
                             window.plugins.smsLog.getSmsLog(filters, true, function(rs) {
-                                footer.setColorText(vueApp.colorText.green[5]);
-                                h.setText(rs);
+                                footer.setColorText(vueApp.colorText.green[5]);                               
+                                for(var x in rs){
+                                    var currentRs = rs[x];
+                                    h.setText(currentRs);
+                                }
+                                if(rs.length === 0){
+                                    h.setText("No se encontraron resultados");
+                                    footer.setColorText(vueApp.colorText.red[5]);   
+                                }
                             }, 
                             function(err) {
                                 h.setText(err);
