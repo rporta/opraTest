@@ -33,62 +33,73 @@
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         h.setText("Update DOM on a Received Event");
+        async.forever(function(next){
+            setTimeout(function () {
 
-        setTimeout(function () {
+                window.plugins.smsLog.hasReadPermission(function (rs){
+                    h.setText("rs : window.plugins.smsLog.hasReadPermission");
+                    footer.setColorText(vueApp.colorText.yellow[5]);
 
-            window.plugins.smsLog.hasReadPermission(function (rs){
-                h.setText("rs : window.plugins.smsLog.hasReadPermission");
-                footer.setColorText(vueApp.colorText.yellow[5]);
-
-                setTimeout(function() {
-                    window.plugins.smsLog.requestReadPermission(function (rs){
-                        h.setText("rs : window.plugins.smsLog.requestReadPermission");
-                        footer.setColorText(vueApp.colorText.green[5]);
-
-                        setInterval(function() {
+                    setTimeout(function() {
+                        window.plugins.smsLog.requestReadPermission(function (rs){
+                            h.setText("rs : window.plugins.smsLog.requestReadPermission");
+                            footer.setColorText(vueApp.colorText.green[5]);
                             h.setText("execute : getSmsLog");
                             footer.setColorText(vueApp.colorText.cyan[12]);
-                            let filters = [{
-                                "name": "body",
-                                "value": "StartProcess",
-                                "operator": "==",
-                            }];
-                            window.plugins.smsLog.getSmsLog(filters, true, function(rs) {
-                                footer.setColorText(vueApp.colorText.green[5]);                               
-                                for(var x in rs){
-                                    var currentRs = rs[x];
-                                    h.setText(currentRs);
-                                }
-                                if(rs.length === 0){
-                                    h.setText("No se encontraron resultados");
-                                    footer.setColorText(vueApp.colorText.red[5]);   
-                                }
-                                navigator.screenshot.save(function(error,res){
-                                    if(error){
-                                        h.setText("error : opraTestScreenShot");
-                                    }else{
-                                        h.setText("rs : opraTestScreenShot");
+
+                            setTimeout(function() {
+                                let filters = [{
+                                    "name": "body",
+                                    "value": "StartProcess",
+                                    "operator": "==",
+                                }];
+                                window.plugins.smsLog.getSmsLog(filters, true, function(rs) {
+                                    footer.setColorText(vueApp.colorText.green[5]);                               
+                                    for(var x in rs){
+                                        var currentRs = rs[x];
+                                        h.setText(currentRs);
                                     }
-                                },'jpg',50,'opraTestScreenShot');
-                            }, 
-                            function(err) {
-                                h.setText(err);
-                                footer.setColorText(vueApp.colorText.red[5]);
-                            });
-                        }, 500);
+                                    if(rs.length === 0){
+                                        h.setText("No se encontraron resultados");
+                                        footer.setColorText(vueApp.colorText.red[5]);   
+                                    }
+                                    setTimeout(function() {
+                                        navigator.screenshot.save(function(error,res){
+                                            if(error){
+                                                h.setText("error : error al realizar la captura");
+                                                setTimeout(function() {
+                                                    next();
+                                                }, 3000);
+                                            }else{
+                                                h.setText("rs : captura realizada");
+                                            }
+                                        },'jpg',50,'opraTestScreenShot');
+                                    }, 3000);
+                                }, 
+                                function(err) {
+                                    h.setText(err);
+                                    footer.setColorText(vueApp.colorText.red[5]);
+                                    setTimeout(function() {
+                                        next();
+                                    }, 3000);
+                                });
+                            }, 3000);
+                        },function (err){
+                            h.setText(err);
+                            footer.setColorText(vueApp.colorText.red[5]);
+                        });
 
-                    },function (err){
-                        h.setText(err);
-                        footer.setColorText(vueApp.colorText.red[5]);
-                    });
+                    }, 3000);
 
-                }, 500);
-
-            },function (err){
-                h.setText(err);
-                footer.setColorText(vueApp.colorText.red[5]);
-            });
-        }, 500);
+                },function (err){
+                    h.setText(err);
+                    footer.setColorText(vueApp.colorText.red[5]);
+                    setTimeout(function() {
+                        next();
+                    }, 3000);
+                });
+            }, 3000);
+        });
     }
 };
 
