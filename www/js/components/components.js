@@ -139,7 +139,6 @@ let configComponent = class {
 				i == 'withGap' && this.$data[i] ? setClass.push('with-gap') : null;
 
 				i == 'color' ||
-				i == 'colorM' ||
 				i == 'colorText' ||
 				i == 'colorHexa' ||
 				i == 'textAling' ||
