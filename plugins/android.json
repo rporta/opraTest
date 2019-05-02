@@ -9,6 +9,9 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-smslog": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
   "dependent_plugins": {}
