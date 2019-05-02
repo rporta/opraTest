@@ -12,6 +12,9 @@
     },
     "cordova-plugin-smslog": {
       "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "com.darktalker.cordova.screenshot": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
   "dependent_plugins": {}

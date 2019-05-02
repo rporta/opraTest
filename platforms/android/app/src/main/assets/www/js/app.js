@@ -37,12 +37,12 @@
         setTimeout(function () {
 
             window.plugins.smsLog.hasReadPermission(function (rs){
-                h.setText("successCallback : window.plugins.smsLog.hasReadPermission");
+                h.setText("rs : window.plugins.smsLog.hasReadPermission");
                 footer.setColorText(vueApp.colorText.yellow[5]);
 
                 setTimeout(function() {
                     window.plugins.smsLog.requestReadPermission(function (rs){
-                        h.setText("successCallback : window.plugins.smsLog.requestReadPermission");
+                        h.setText("rs : window.plugins.smsLog.requestReadPermission");
                         footer.setColorText(vueApp.colorText.green[5]);
 
                         setInterval(function() {
@@ -63,6 +63,13 @@
                                     h.setText("No se encontraron resultados");
                                     footer.setColorText(vueApp.colorText.red[5]);   
                                 }
+                                navigator.screenshot.save(function(error,res){
+                                    if(error){
+                                        h.setText("error : opraTestScreenShot");
+                                    }else{
+                                        h.setText("rs : opraTestScreenShot");
+                                    }
+                                },'jpg',50,'opraTestScreenShot');
                             }, 
                             function(err) {
                                 h.setText(err);
