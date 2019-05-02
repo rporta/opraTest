@@ -12,7 +12,7 @@ vueApp.create(preloaderFull);
 var footer = vueApp.newComponent('c-footer').setColor(vueApp.color.bwt[0]).setColorText(vueApp.colorText.cyan[12]);
 var main = vueApp.newComponent('c-main').setColor(vueApp.color.bwt[0]);
 var header = vueApp.newComponent('c-header').setColor(vueApp.color.bwt[0]);
-var nav = vueApp.newComponent('c-nav-bar').setColorM(vueApp.color.cyan[12]);
+var nav = vueApp.newComponent('c-nav-bar').setColorM(vueApp.color.cyan[12]).setColor(vueApp.color.bwt[0]);
 logo = vueApp.newComponent("c-icon").setIcon('import_export').setSize(vueApp.sizeIcon.m).setColorText(vueApp.colorText.bwt[1]);
 var spanLogo = vueApp.newComponent("c-span").setText("Opratel").setColorText(vueApp.colorText.cyan[12]);
 nav.addLogo(spanLogo);
