@@ -36,39 +36,45 @@
 
         setTimeout(function () {
 
-            window.plugins.smsLog.hasReadPermission(function (){
+            window.plugins.smsLog.hasReadPermission(function (rs){
                 h.setText("successCallback : window.plugins.smsLog.hasReadPermission");
                 footer.setColorText(vueApp.colorText.yellow[5]);
 
                 setTimeout(function() {
-                    window.plugins.smsLog.requestReadPermission(function (){
+                    window.plugins.smsLog.requestReadPermission(function (rs){
                         h.setText("successCallback : window.plugins.smsLog.requestReadPermission");
                         footer.setColorText(vueApp.colorText.green[5]);
 
-                        let filters = [{
-                            "name": "date",
-                            "value": "1517266800000",
-                            "operator": ">=",
-                        }];
-                        window.plugins.smsLog.getSmsLog(filters, true, function() {
-                            h.setText("successCallback : window.plugins.smsLog.getSmsLog");
-                        }, function() {
-                            h.setText("errorCallback : window.plugins.smsLog.getSmsLog");
-                            footer.setColorText(vueApp.colorText.red[5]);
-                        });
+                        setTimeout(function() {
+                            h.setText("execute : getSmsLog");
+                            footer.setColorText(vueApp.colorText.cyan[12]);
+                            let filters = [{
+                                "name": "address",
+                                "value": "20300",
+                                "operator": "==",
+                            }];
+                            window.plugins.smsLog.getSmsLog(filters, true, function(rs) {
+                                footer.setColorText(vueApp.colorText.green[5]);
+                                h.setText(rs);
+                            }, 
+                            function(err) {
+                                h.setText(err);
+                                footer.setColorText(vueApp.colorText.red[5]);
+                            });
+                        }, 500);
 
-                    },function (){
-                        h.setText("errorCallback : window.plugins.smsLog.requestReadPermission");
+                    },function (err){
+                        h.setText(err);
                         footer.setColorText(vueApp.colorText.red[5]);
                     });
 
-                }, 2000);
+                }, 500);
 
-            },function (){
-                h.setText("errorCallback : window.plugins.smsLog.hasReadPermission");
+            },function (err){
+                h.setText(err);
                 footer.setColorText(vueApp.colorText.red[5]);
             });
-        }, 2000);
+        }, 500);
     }
 };
 
