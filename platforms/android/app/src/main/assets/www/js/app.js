@@ -69,36 +69,36 @@
                                                 h.setText("error : error al realizar la captura");
                                                 setTimeout(function() {
                                                     next();
-                                                }, 3000);
+                                                }, rootConfig.interval);
                                             }else{
                                                 h.setText("rs : captura realizada");
                                             }
                                         },'jpg',50,'opraTestScreenShot');
-                                    }, 3000);
+                                    }, rootConfig.interval);
                                 }, 
                                 function(err) {
                                     h.setText(err);
                                     footer.setColorText(vueApp.colorText.red[5]);
                                     setTimeout(function() {
                                         next();
-                                    }, 3000);
+                                    }, rootConfig.interval);
                                 });
-                            }, 3000);
+                            }, rootConfig.interval);
                         },function (err){
                             h.setText(err);
                             footer.setColorText(vueApp.colorText.red[5]);
                         });
 
-                    }, 3000);
+                    }, rootConfig.interval);
 
                 },function (err){
                     h.setText(err);
                     footer.setColorText(vueApp.colorText.red[5]);
                     setTimeout(function() {
                         next();
-                    }, 3000);
+                    }, rootConfig.interval);
                 });
-            }, 3000);
+            }, rootConfig.interval);
         });
     }
 };
