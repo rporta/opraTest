@@ -22,5 +22,29 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cz.blocshop.socketsforcordova": {
+    "source": {
+      "type": "registry",
+      "id": "cz.blocshop.socketsforcordova"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-background-mode": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-background-mode@^0.7.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device"
+    },
+    "is_top_level": false,
+    "variables": {}
   }
 }

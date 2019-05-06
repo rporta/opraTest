@@ -15,7 +15,17 @@
     },
     "com.darktalker.cordova.screenshot": {
       "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cz.blocshop.socketsforcordova": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-background-mode": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    }
+  }
 }

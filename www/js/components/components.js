@@ -3635,6 +3635,34 @@ var img = new configComponent({
 		},
 	}	
 });
+var iframe = new  configComponent({
+	name : "c-iframe",
+	data : function(){
+		return {
+			src :this.psrc,
+			pshow :this.ppshow,
+		}
+	},
+	props : {
+		psrc  : {
+			type : String,
+			required : false, 
+			default : null,
+		},
+		pshow  : {
+			type : Boolean,
+			required : false, 
+			default : true,
+		},		
+	},
+	template : 
+	'<transition name="fade">\
+	<iframe key="this.generateId(5)" v-show="this.show" v-bind:id="this.generateId(5)" v-bind:src="this.src"><slot></slot></iframe>\
+	</transition>',
+	methods : {
+		
+	}
+});
 var badge = new configComponent({
 	name : "c-badge",
 	data : function(){

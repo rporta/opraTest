@@ -20,6 +20,7 @@ var vueApp = new Vue({
 		/*components-preloader*/
 		[preloader.name] : preloader,
 		[preloaderCircle.name] : preloaderCircle,
+		[iframe.name] : iframe,
 		/*component-navbar*/
 		[navbar.name] : navbar,
 		/*components-modal*/
