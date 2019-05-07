@@ -26,4 +26,3 @@ vueApp.create(footer);
 var h = vueApp.newComponent("c-h").setSize(6);
 var img = vueApp.newComponent("c-img");
 footer.create(h);
-

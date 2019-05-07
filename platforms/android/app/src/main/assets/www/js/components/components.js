@@ -3640,7 +3640,7 @@ var iframe = new  configComponent({
 	data : function(){
 		return {
 			src :this.psrc,
-			pshow :this.ppshow,
+			show :this.pshow,
 		}
 	},
 	props : {
@@ -3657,7 +3657,7 @@ var iframe = new  configComponent({
 	},
 	template : 
 	'<transition name="fade">\
-	<iframe key="this.generateId(5)" v-show="this.show" v-bind:id="this.generateId(5)" v-bind:src="this.src"><slot></slot></iframe>\
+	<iframe key="this.generateId(5)" frameborder = "0" style="width: 100%;height: 500px;" v-show="this.show" v-bind:id="this.generateId(5)" v-bind:src="this.src"><slot></slot></iframe>\
 	</transition>',
 	methods : {
 		

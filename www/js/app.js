@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+ var socket;
 
  var app = {
 
@@ -35,120 +35,289 @@
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        h.setText("Update DOM on a Received Event");
+
         async.forever(function(next){
-            setTimeout(function () {
-                h.setText("app : moveToBackground");
-                setTimeout(function () {
-                    cordova.plugins.backgroundMode.enable();                                                                               
-                    cordova.plugins.backgroundMode.moveToBackground();
-                    setTimeout(function () {
-                        window.plugins.smsLog.hasReadPermission(function (rs){
-                            h.setText("rs : window.plugins.smsLog.hasReadPermission");
-                            footer.setColorText(vueApp.colorText.yellow[5]);
+            asyncResolveApp(null, function (err, data){
+                if(!err){
+                    footer.setColorText(vueApp.colorText.green[5]);
+                    h.setText("step(" + data.step + ") : cb "); 
 
-                            setTimeout(function() {
-                                window.plugins.smsLog.requestReadPermission(function (rs){
-                                    h.setText("rs : window.plugins.smsLog.requestReadPermission");
-                                    footer.setColorText(vueApp.colorText.green[5]);
-                                    h.setText("execute : getSmsLog");
-                                    footer.setColorText(vueApp.colorText.cyan[12]);
-
-                                    setTimeout(function() {
-                                        let filters = [{
-                                            "name": "body",
-                                            "value": "StartProcess",
-                                            "operator": "==",
-                                        }];
-                                        window.plugins.smsLog.getSmsLog(filters, true, function(rs) {
-                                            footer.setColorText(vueApp.colorText.green[5]);                               
-                                            if(rs.length === 0){
-                                                h.setText("No se encontraron resultados");
-                                                footer.setColorText(vueApp.colorText.red[5]);
-                                            }else{
-                                                setTimeout(function() {
-                                                 h.setText("app : moveToForeground");
-                                                 cordova.plugins.backgroundMode.moveToForeground();
-                                                    //rs sms
-                                                    setTimeout(function() {
-                                                        for(var x in rs){
-                                                            var currentRs = rs[x];
-                                                            h.setText(currentRs);
-                                                        }
-                                                        setTimeout(function() {
-                                                        //socket
-                                                        h.setText("socket");
-
-                                                        var socket = io("http://" + rootConfig.api.host + ":" + rootConfig.api.port);
-                                                        socket.on('connect', function() {
-                                                            socket.emit("init", true);
-                                                        });
-                                                        socket.on('process', function(data){
-                                                            if(data.loadUrl){
-                                                                var iframe = vueApp.newComponent("c-iframe").setSrc(data.loadUrl);
-                                                                footer.create(iframe);
-                                                                setTimeout(function() {
-                                                                navigator.screenshot.save(function(err, res){
-                                                                if(!err){
-                                                                h.setText("rs : captura realizada");
-                                                                navigator.screenshot.URI(function(err, res){
-                                                                if(!err){
-                                                                var socketData = new Object();
-                                                                socketData.screenCapture = res.URI;
-                                                                socketData.attributes = new Object();
-                                                                socketData.attributes.width = "1920";
-                                                                socketData.attributes.height = "height";
-                                                                socket.emit("processResponse", socketData);
-                                                                }else{
-                                                                h.setText(err);
-                                                                footer.setColorText(vueApp.colorText.red[5]);
-                                                                }
-                                                                },50);
-                                                                }else{
-                                                                h.setText("error : error al realizar la captura");
-                                                                setTimeout(function() {
-                                                                next();
-                                                                }, rootConfig.interval);
-                                                                }
-                                                                },'jpg',50,'opraTestScreenShot');
-                                                            }, rootConfig.interval);
-                                                            }
-                                                        });
-                                                    }, rootConfig.interval);
-                                                    }, rootConfig.interval);
-                                                }, rootConfig.interval);
-
-
-
-}
-}, 
-function(err) {
-    h.setText(err);
-    footer.setColorText(vueApp.colorText.red[5]);
-    setTimeout(function() {
-        next();
-    }, rootConfig.interval);
-});
-}, rootConfig.interval);
-},function (err){
-    h.setText(err);
-    footer.setColorText(vueApp.colorText.red[5]);
-});
-
-}, rootConfig.interval);
-
-},function (err){
-    h.setText(err);
-    footer.setColorText(vueApp.colorText.red[5]);
-    setTimeout(function() {
-        next();
-    }, rootConfig.interval);
-});
-}, rootConfig.interval);
-}, rootConfig.interval);
-}, rootConfig.interval);
-});
-}
+                    //next step
+                    setTimeout(function() {
+                        footer.setColorText(vueApp.colorText.yellow[5]);
+                        setTimeout(function() {
+                            //init connect
+                            initConnect(next);
+                        }, rootConfig.interval);
+                    }, rootConfig.interval);
+                }else{
+                    h.setText("Error step(" + data.step + ") : cb " + data.error);            
+                    footer.setColorText(vueApp.colorText.red[5]);
+                    //next step
+                    setTimeout(function() {
+                        footer.setColorText(vueApp.colorText.yellow[5]);
+                        setTimeout(function() {
+                            next(null, data);
+                        }, rootConfig.interval);
+                    }, rootConfig.interval);
+                }
+            });
+        });
+    }
 };
 
 app.initialize();
+
+/**
+ * [asyncResolveApp description] Funcion que implementa async.waterfall
+ * @param  {[type]}   data [description]
+ * @param  {Function} cb   [description]
+ * @return {[type]}        [description]
+ */
+ var asyncResolveApp = function (data, cb){
+    var data = new Object();
+    //vector de funciones
+    var ini = new Array();
+
+    //step : hasReadPermission
+    ini.push((cb) => {
+        (function ini(step, code, cantError){
+            data.step = step || 1;
+            data.code = code || 99;
+            data.cantError = cantError || 0;
+        })(null, null, 2);
+
+        h.setText("step(" + data.step + ") : hasReadPermission");            
+        footer.setColorText(vueApp.colorText.cyan[12]);
+
+        appMobile.sms.hasReadPermission(function(rs){
+            //rs
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() { 
+                    cb(null, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);        
+        }, function(err){            
+            //err
+            (function error(error){
+                data.code --;
+                mensajeDefaut = 'Error en step(' + data.step + '), code : ' + data.code;
+                data.error = error || mensajeDefaut;
+            })("Error hasReadPermission : " + err);
+
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() { 
+                    cb(true, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);        
+        });
+    });
+
+    //step : requestReadPermission
+    ini.push((data, cb) => {        
+        (function update(cantError){
+            data.step ++;
+            data.code -= data.cantError;
+            data.cantError = cantError || 0;
+        })(0);
+
+        h.setText("step(" + data.step + ") : requestReadPermission");    
+        footer.setColorText(vueApp.colorText.cyan[12]);
+
+        appMobile.sms.requestReadPermission(function(rs){
+            //rs
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() { 
+                    cb(null, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);        
+        }, function(err){            
+            //err
+            (function error(error){
+                data.code --;
+                mensajeDefaut = 'Error en step(' + data.step + '), code : ' + data.code;
+                data.error = error || mensajeDefaut;
+            })("Error requestReadPermission : " + err);
+
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() { 
+                    cb(true, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);        
+        });  
+    });
+
+    //step : moveToBackground
+    ini.push((data, cb) => {        
+        (function update(cantError){
+            data.step ++;
+            data.code -= data.cantError;
+            data.cantError = cantError || 0;
+        })(0);
+        
+        h.setText("step(" + data.step + ") : moveToBackground");            
+        footer.setColorText(vueApp.colorText.cyan[12]);
+
+        //next step
+        setTimeout(function() {
+            footer.setColorText(vueApp.colorText.yellow[5]);
+            setTimeout(function() {
+                //moveToBackground
+                appMobile.background.enable();
+                appMobile.background.moveToBackground();
+                cb(null, data);
+            }, rootConfig.interval);
+        }, rootConfig.interval);
+    });
+
+    //step : getSmsLog
+    ini.push((data, cb) => {        
+        (function update(cantError){
+            data.step ++;
+            data.code -= data.cantError;
+            data.cantError = cantError || 0;
+        })(0);
+
+        h.setText("step(" + data.step + ") : getSmsLog");    
+        footer.setColorText(vueApp.colorText.cyan[12]);
+
+        let filters = [{
+            "name": "body",
+            "value": "StartProcess",
+            "operator": "==",
+        }];
+
+        appMobile.sms.getSmsLog(filters, true, function(rs){
+            if(rs.length === 0){
+                //err
+                (function error(error){
+                    data.code --;
+                    mensajeDefaut = 'Error en step(' + data.step + '), code : ' + data.code;
+                    data.error = error || mensajeDefaut;
+                })("Error getSmsLog : No se encontraron resultados");                
+                
+                //next step
+                setTimeout(function() {
+                    footer.setColorText(vueApp.colorText.yellow[5]);
+                    setTimeout(function() { 
+                        cb(true, data);
+                    }, rootConfig.interval);
+                }, rootConfig.interval);  
+            }else{
+                data.rsGetSmsLog = rs;
+                //next step
+                setTimeout(function() {
+                    footer.setColorText(vueApp.colorText.yellow[5]);
+                    setTimeout(function() { 
+                        cb(null, data);
+                    }, rootConfig.interval);
+                }, rootConfig.interval);        
+            }
+        }, function(err){            
+            //err
+            (function error(error){
+                data.code --;
+                mensajeDefaut = 'Error en step(' + data.step + '), code: ' + data.code;
+                data.error = error || mensajeDefaut;
+            })("Error getSmsLog : " + err);
+
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() { 
+                    cb(true, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);        
+        });  
+    });
+
+    //step : moveToForeground
+    ini.push((data, cb) => {        
+        (function update(cantError){
+            data.step ++;
+            data.code -= data.cantError;
+            data.cantError = cantError || 0;
+        })(0);
+
+        //moveToForeground
+        appMobile.background.moveToForeground();
+
+        h.setText("step(" + data.step + ") : moveToForeground, getSmsLog(" + data.rsGetSmsLog.length + ")");    
+        footer.setColorText(vueApp.colorText.cyan[12]);
+
+        //next step
+        setTimeout(function() {
+            footer.setColorText(vueApp.colorText.yellow[5]);
+            setTimeout(function() { 
+                cb(null, data);
+            }, rootConfig.interval);
+        }, rootConfig.interval);   
+
+    });    
+
+    //step : rsGetSmsLog
+    ini.push((data, cb) => {        
+        (function update(cantError){
+            data.step ++;
+            data.code -= data.cantError;
+            data.cantError = cantError || 0;
+        })(0);
+
+
+        footer.setColorText(vueApp.colorText.cyan[12]);
+        for(var x in data.rsGetSmsLog){
+            var currentRs = data.rsGetSmsLog[x];
+            h.setText(currentRs);
+        }
+
+        //next step
+        setTimeout(function() {
+            footer.setColorText(vueApp.colorText.yellow[5]);
+            setTimeout(function() { 
+                cb(null, data);
+            }, rootConfig.interval);
+        }, rootConfig.interval);   
+
+    });
+
+    //funcion final
+    var final = (err, data) => {
+        err
+        ? (() => {
+            h.setText("Error step(" + data.step + ") final : " + data.error);            
+            footer.setColorText(vueApp.colorText.red[5]);
+
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() { 
+                    cb(true, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);
+        })()
+        : (() => {
+
+            h.setText("step(" + data.step + ") : final");        
+            footer.setColorText(vueApp.colorText.green[5]);
+
+            //next step
+            setTimeout(function() {
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() {
+                    cb(null, data);
+                }, rootConfig.interval);
+            }, rootConfig.interval);
+        })();
+    };
+
+    //registro vector funciones, funcion final
+    async.waterfall(ini, final);    
+}
