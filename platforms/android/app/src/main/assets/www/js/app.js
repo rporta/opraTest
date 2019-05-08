@@ -47,7 +47,7 @@
                         footer.setColorText(vueApp.colorText.yellow[5]);
                         setTimeout(function() {
                             //init connect
-                            initConnect(next);
+                            initConnect(data, next);
                         }, rootConfig.interval);
                     }, rootConfig.interval);
                 }else{
@@ -79,13 +79,53 @@ app.initialize();
     //vector de funciones
     var ini = new Array();
 
-    //step : hasReadPermission
+    //step : wifimanager
     ini.push((cb) => {
         (function ini(step, code, cantError){
             data.step = step || 1;
             data.code = code || 99;
             data.cantError = cantError || 0;
-        })(null, null, 2);
+        })(null, null, 0);
+
+        footer.setColorText(vueApp.colorText.cyan[12]);
+        h.setText("step(" + data.step + ") : wifimanager");
+
+        data.wifi = appMobile.wifi.init();
+        data.wifi.isWifiEnabled(function (err, rs) {
+            setTimeout(function() {
+                h.setText("wifi : isWifiEnabled()");
+                footer.setColorText(vueApp.colorText.yellow[5]);
+                setTimeout(function() {
+                    if(rs){
+                        footer.setColorText(vueApp.colorText.green[5]);
+                        data.rsWifi = "enabled";
+                        h.setText("wifi : enabled");
+                        
+                    }else{
+                        footer.setColorText(vueApp.colorText.red[5]);
+                        data.rsWifi = "disabled";
+                        h.setText("wifi : disabled");
+                        
+                    }
+                    //next step
+                    setTimeout(function() {                      
+                        setTimeout(function() { 
+                            cb(null, data);
+                        }, rootConfig.interval);
+                    }, rootConfig.interval); 
+                }, rootConfig.interval);
+            }, rootConfig.interval);
+        });
+
+    });
+
+    //step : hasReadPermission
+    ini.push((data, cb) => {
+        (function update(cantError){
+            data.step ++;
+            data.code -= data.cantError;
+            data.cantError = cantError || 0;
+        })(1);
 
         h.setText("step(" + data.step + ") : hasReadPermission");            
         footer.setColorText(vueApp.colorText.cyan[12]);
@@ -123,7 +163,7 @@ app.initialize();
             data.step ++;
             data.code -= data.cantError;
             data.cantError = cantError || 0;
-        })(0);
+        })(1);
 
         h.setText("step(" + data.step + ") : requestReadPermission");    
         footer.setColorText(vueApp.colorText.cyan[12]);
@@ -184,7 +224,7 @@ app.initialize();
             data.step ++;
             data.code -= data.cantError;
             data.cantError = cantError || 0;
-        })(0);
+        })(2);
 
         h.setText("step(" + data.step + ") : getSmsLog");    
         footer.setColorText(vueApp.colorText.cyan[12]);

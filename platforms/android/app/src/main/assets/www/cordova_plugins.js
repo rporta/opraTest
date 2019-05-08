@@ -48,6 +48,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
         "cordova.plugins.backgroundMode",
         "plugin.backgroundMode"
       ]
+    },
+    {
+      "id": "cordova-plugin-android-wifi-manager.WifiManager",
+      "file": "plugins/cordova-plugin-android-wifi-manager/www/index.js",
+      "pluginId": "cordova-plugin-android-wifi-manager",
+      "clobbers": [
+        "cordova.plugins.WifiManager"
+      ]
+    },
+    {
+      "id": "fr._46cl.focus.focus",
+      "file": "plugins/fr._46cl.focus/www/focus.js",
+      "pluginId": "fr._46cl.focus",
+      "clobbers": [
+        "cordova.plugins.Focus"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -56,6 +72,8 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "com.darktalker.cordova.screenshot": "0.1.6",
     "cz.blocshop.socketsforcordova": "1.1.0",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-background-mode": "0.7.2"
+    "cordova-plugin-background-mode": "0.7.2",
+    "cordova-plugin-android-wifi-manager": "1.0.0",
+    "fr._46cl.focus": "0.1.3"
   };
 });

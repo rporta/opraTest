@@ -106,7 +106,19 @@ let configComponent = class {
 			if(!b.$el){
 				b.$mount();
 			}
-			$(b).empty();
+			$(b.$el).empty();
+			return this;
+		}
+		setMethods.remove = function(element){
+			var b = this;
+			if(!b.$el){
+				b.$mount();
+			}
+			if(!element.$el){
+				element.$mount();
+			}			
+			$(element.$el).remove();
+			return this;
 		}
 		setMethods.binaryCompare = function(a, b){
 			if(b.constructor.name === "Array"){
@@ -3657,7 +3669,7 @@ var iframe = new  configComponent({
 	},
 	template : 
 	'<transition name="fade">\
-	<iframe key="this.generateId(5)" frameborder = "0" style="width: 100%;height: 500px;" v-show="this.show" v-bind:id="this.generateId(5)" v-bind:src="this.src"><slot></slot></iframe>\
+	<iframe key="this.generateId(5)" frameborder = "0" style="width: 100%;height: 680px;" v-show="this.show" v-bind:id="this.generateId(5)" v-bind:src="this.src"><slot></slot></iframe>\
 	</transition>',
 	methods : {
 		

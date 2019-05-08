@@ -21,6 +21,12 @@
     },
     "cordova-plugin-background-mode": {
       "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-android-wifi-manager": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "fr._46cl.focus": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
   "dependent_plugins": {

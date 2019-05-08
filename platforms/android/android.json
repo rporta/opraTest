@@ -39,6 +39,18 @@
             {
               "xml": "<preference name=\"AndroidLaunchMode\" value=\"singleInstance\" />",
               "count": 1
+            },
+            {
+              "xml": "<preference name=\"android-minSdkVersion\" value=\"23\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"WifiManagerPlugin\"><param name=\"android-package\" value=\"dk.kapetanovic.wifimanager.WifiManagerPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Focus\"><param name=\"android-package\" value=\"fr._46cl.focus.Focus\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -62,6 +74,22 @@
             },
             {
               "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\" />",
               "count": 1
             }
           ],
@@ -92,6 +120,12 @@
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
     "cordova-plugin-background-mode": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-android-wifi-manager": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "fr._46cl.focus": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
@@ -145,6 +179,22 @@
         "cordova.plugins.backgroundMode",
         "plugin.backgroundMode"
       ]
+    },
+    {
+      "id": "cordova-plugin-android-wifi-manager.WifiManager",
+      "file": "plugins/cordova-plugin-android-wifi-manager/www/index.js",
+      "pluginId": "cordova-plugin-android-wifi-manager",
+      "clobbers": [
+        "cordova.plugins.WifiManager"
+      ]
+    },
+    {
+      "id": "fr._46cl.focus.focus",
+      "file": "plugins/fr._46cl.focus/www/focus.js",
+      "pluginId": "fr._46cl.focus",
+      "clobbers": [
+        "cordova.plugins.Focus"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -153,6 +203,8 @@
     "com.darktalker.cordova.screenshot": "0.1.6",
     "cz.blocshop.socketsforcordova": "1.1.0",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-background-mode": "0.7.2"
+    "cordova-plugin-background-mode": "0.7.2",
+    "cordova-plugin-android-wifi-manager": "1.0.0",
+    "fr._46cl.focus": "0.1.3"
   }
 }

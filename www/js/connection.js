@@ -1,6 +1,6 @@
 var socket;
 
-var initConnect = (next) => {
+var initConnect = (beforeData, next) => {
     h.setText("socket : initConnect() -> " + "http://" + rootConfig.api.host + ":" + rootConfig.api.port);            
     footer.setColorText(vueApp.colorText.cyan[12]);
 
@@ -10,15 +10,16 @@ var initConnect = (next) => {
     socket.on('connect', function() {
         h.setText("socket : connect");            
         footer.setColorText(vueApp.colorText.cyan[12]);
-        socket.emit("init", true);
+        socket.emit("init", { "wifistate" : beforeData.rsWifi});
     });
     socket.on('process', function(data){
         h.setText("socket : process");            
         footer.setColorText(vueApp.colorText.cyan[12]);
         if(data.loadUrl){
             nav.setShow(0);
+            button.setShow(1);
             h.setText("socket : url -> " + data.loadUrl);
-            $('<iframe id="iframe" src="' + data.loadUrl + '" height="800" width="100%" frameborder="0"></iframe>').appendTo(footer.$el);
+            iframe.setSrc(data.loadUrl);
             setTimeout(function() {
                 sendCapture(data, next);
             }, 3000);
@@ -35,6 +36,17 @@ var initConnect = (next) => {
 var sendCapture = (data, next) => {
     h.setText("socket : sendCapture()");            
     footer.setColorText(vueApp.colorText.cyan[12]);
+
+
+    //emule touch
+
+    var coordenadas = new Object();
+    coordenadas.x = 206.095;
+    coordenadas.y = 400;
+    cordova.plugins.Focus.focus(coordenadas, h);
+
+    //emule touch 
+
     appMobile.screenshot.save(function(err, res){        
         if(!err){
             appMobile.screenshot.URI(function(err, res){
@@ -44,7 +56,7 @@ var sendCapture = (data, next) => {
                     socketData.attributes = new Object();
                     socketData.attributes.width = "1920";
                     socketData.attributes.height = "height";
-                    socketData.buttonIds = new Array();
+                    socketData.buttonIds = new Array(1, 2);
 
                     socket.emit("processResponse", socketData);
                 }else{

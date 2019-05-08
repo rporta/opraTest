@@ -25,4 +25,19 @@ vueApp.create(footer);
 
 var h = vueApp.newComponent("c-h").setSize(6);
 var img = vueApp.newComponent("c-img");
+var iframe = vueApp.newComponent("c-iframe");
+var button = vueApp.newComponent("c-button").setText("OPEN:MODAL").setShow(0);
+main.create(button);
 footer.create(h);
+footer.create(iframe);
+var modal = vueApp.newComponent("c-modal").setText("hola");
+vueApp.create(modal);
+
+//events  
+var buttonClicks = 0;
+$(button.$el).click(function() {
+	buttonClicks++;
+	modal.setText("OPEN:MODAL : click (" + buttonClicks + ")");
+	modal.open();
+});
+$(main.$el).css("display", "contents");
