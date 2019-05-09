@@ -1,86 +1,192 @@
 var socket;
 
 var initConnect = (beforeData, next) => {
-    h.setText("socket : initConnect() -> " + "http://" + rootConfig.api.host + ":" + rootConfig.api.port);            
+
+    // //emule touch
+    setTimeout(function() {
+        var coordenadas = new Object();
+        coordenadas.x = 200;
+        coordenadas.y = 40;
+        cordova.plugins.Focus.focus(coordenadas, h, touch);
+
+
+        //emule touch
+        setTimeout(function() {
+            coordenadas.x = 257;
+            coordenadas.y = 597;
+            cordova.plugins.Focus.focus(coordenadas, h, touch);
+        }, 3000);
+
+    }, 3000);
+
+    // h.setText("socket : initConnect() -> " + "http://" + rootConfig.api.host + ":" + rootConfig.api.port);            
     footer.setColorText(vueApp.colorText.cyan[12]);
 
+    //create instance socket
     socket = appMobile.socket.newSocket(rootConfig.api.host, rootConfig.api.port);
-
-    //events [connect, process, disconnect]
+    
+    //register events socket [connect, processUrl, processEvent, disconnect]
     socket.on('connect', function() {
         h.setText("socket : connect");            
         footer.setColorText(vueApp.colorText.cyan[12]);
         socket.emit("init", { "wifistate" : beforeData.rsWifi});
     });
-    socket.on('process', function(data){
-        h.setText("socket : process");            
+    socket.on('processUrl', function(data){
+        h.setText("socket : processUrl");            
         footer.setColorText(vueApp.colorText.cyan[12]);
-        if(data.loadUrl){
-            nav.setShow(0);
-            button.setShow(1);
-            h.setText("socket : url -> " + data.loadUrl);
-            iframe.setSrc(data.loadUrl);
+
+        /**
+         * processUrl
+         * 
+         * 1) socket envia coordenadas (x, y) || socket envia coordenadas (x, y), text 
+         * 2) app ejecuta touch en coordenadas (x, y)
+         * 3) inyectar un valor en input
+         * 4) app realiza una captura de la pantalla
+         * 5) app envia captura al socket
+         */
+
+         if(data.text.constructor.name = "String" && data.text.length > 0 ){
+
+            //case (2) : socket envia coordenadas (x, y), text 
+
+            //emule touch
+            var coordenadas = new Object();
+            coordenadas.x = data.coordenadas.x;
+            coordenadas.y = data.coordenadas.y;
+            cordova.plugins.Focus.focus(coordenadas, h, touch);
+
+            //hay que pensar como inyectar un valor en input...para realiza step (4, 5)
+
             setTimeout(function() {
-                sendCapture(data, next);
+                //sendCapture() realiza step (4, 5)
+                sendCapture(next);
             }, 3000);
+
+        }else{
+
+            //case (1) : socket envia coordenadas (x, y)
+
+            //emule touch
+            var coordenadas = new Object();
+            coordenadas.x = data.coordenadas.x;
+            coordenadas.y = data.coordenadas.y;
+            cordova.plugins.Focus.focus(coordenadas, h, touch);
+
+            setTimeout(function() {
+                //sendCapture() realiza step (4, 5)
+                sendCapture(next);
+            }, 3000);       
         }
     });
+
+    socket.on('processEvent', function(data){
+        h.setText("socket : processEvent");            
+        footer.setColorText(vueApp.colorText.cyan[12]);
+
+        /**
+         * processEvent
+         * 
+         * 1) socket envia coordenadas (x, y) || socket envia coordenadas (x, y), text 
+         * 2) app ejecuta touch en coordenadas (x, y)
+         * 3) inyectar un valor en input
+         * 4) app realiza una captura de la pantalla
+         * 5) app envia captura al socket
+         */
+
+         if(data.text.constructor.name = "String" && data.text.length > 0 ){
+
+            //case (2) : socket envia coordenadas (x, y), text 
+
+            //emule touch
+            var coordenadas = new Object();
+            coordenadas.x = data.coordenadas.x;
+            coordenadas.y = data.coordenadas.y;
+            cordova.plugins.Focus.focus(coordenadas, h, touch);
+
+            //hay que pensar como inyectar un valor en input...para realiza step (4, 5)
+            h.setText("hay que pensar como inyectar un valor en input...");
+
+            setTimeout(function() {
+                //sendCapture() realiza step (4, 5)
+                sendCapture(next);
+            }, 3000);
+
+        }else{
+
+            //case (1) : socket envia coordenadas (x, y)
+
+            //emule touch
+            var coordenadas = new Object();
+            coordenadas.x = data.coordenadas.x;
+            coordenadas.y = data.coordenadas.y;
+            cordova.plugins.Focus.focus(coordenadas, h, touch);
+
+            setTimeout(function() {
+                //sendCapture() realiza step (4, 5)
+                sendCapture(next);
+            }, 3000);       
+        }
+    });
+
     socket.on('disconnect', function() {
         h.setText("socket : disconnect");            
         footer.setColorText(vueApp.colorText.cyan[12]);
-        next();
         socket.emit("disconnect", true);
-    });    
+
+        //next step
+        setTimeout(function() {
+            footer.setColorText(vueApp.colorText.yellow[5]);
+            setTimeout(function() {
+                next();
+            }, rootConfig.interval);
+        }, rootConfig.interval);
+    });  
+    // h.setText("socket : load events");            
 };
 
-var sendCapture = (data, next) => {
+var sendCapture = (next) => {
     h.setText("socket : sendCapture()");            
     footer.setColorText(vueApp.colorText.cyan[12]);
 
-
-    //emule touch
-
-    var coordenadas = new Object();
-    coordenadas.x = 206.095;
-    coordenadas.y = 400;
-    cordova.plugins.Focus.focus(coordenadas, h);
-
-    //emule touch 
-
-    appMobile.screenshot.save(function(err, res){        
-        if(!err){
-            appMobile.screenshot.URI(function(err, res){
-                if(!err){
-                    var socketData = new Object();
-                    socketData.screenCapture = res.URI;
-                    socketData.attributes = new Object();
-                    socketData.attributes.width = "1920";
-                    socketData.attributes.height = "height";
-                    socketData.buttonIds = new Array(1, 2);
-
-                    socket.emit("processResponse", socketData);
-                }else{
-                    h.setText(err);
-                    footer.setColorText(vueApp.colorText.red[5]);
-                    //next step
-                    setTimeout(function() {
-                        footer.setColorText(vueApp.colorText.yellow[5]);
+    setTimeout(function() {
+        appMobile.screenshot.save(function(err, res){        
+            if(!err){
+                appMobile.screenshot.URI(function(err, res){
+                    if(!err){
+                        //envio captura al socket luego de 5000 ms
                         setTimeout(function() {
-                            next(null, data);
-                        }, rootConfig.interval);
-                    }, rootConfig.interval);                    
-                }
-            },50);
-        }else{
-            h.setText("error : error al realizar la captura");
-            //next step
-            setTimeout(function() {
-                footer.setColorText(vueApp.colorText.yellow[5]);
+                            var socketData = new Object();
+                            socketData.screenCapture = res.URI;
+                            socketData.attributes = new Object();
+                            socketData.attributes.width = "1920";
+                            socketData.attributes.height = "1080";
+                            socket.emit("processResponse", socketData);
+                            
+                            return true;                           
+                        }, 5000);                    
+                    }else{
+                        h.setText(err);
+                        footer.setColorText(vueApp.colorText.red[5]);
+                        //next step
+                        setTimeout(function() {
+                            footer.setColorText(vueApp.colorText.yellow[5]);
+                            setTimeout(function() {
+                                next();
+                            }, rootConfig.interval);
+                        }, rootConfig.interval);                    
+                    }
+                },50);
+            }else{
+                h.setText("error : error al realizar la captura");
+                //next step
                 setTimeout(function() {
-                    next(null, data);
-                }, rootConfig.interval);
-            }, rootConfig.interval);    
-        }
-    },'jpg',50,'opraTestScreenShot');
+                    footer.setColorText(vueApp.colorText.yellow[5]);
+                    setTimeout(function() {
+                        next();
+                    }, rootConfig.interval);
+                }, rootConfig.interval);    
+            }
+        },'jpg',50,'opraTestScreenShot');
+    }, rootConfig.interval);                    
 };
 

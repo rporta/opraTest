@@ -1,7 +1,9 @@
 var rootConfig = {
-	"interval" : 500,
+	"interval" : 1,
 	"api" : {
-		"host" : "rtasrv.opratel.com",
+		"host_old" : "rtasrv.opratel.com",
+		"host" : "hera",
 		"port" : "10001" 
 	}
 };
+

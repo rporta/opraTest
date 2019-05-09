@@ -27,11 +27,30 @@ var h = vueApp.newComponent("c-h").setSize(6);
 var img = vueApp.newComponent("c-img");
 var iframe = vueApp.newComponent("c-iframe");
 var button = vueApp.newComponent("c-button").setText("OPEN:MODAL").setShow(0);
+var input = vueApp.newComponent("c-input-fields").setText("text").setColorText(vueApp.colorText.cyan[12]).setShow(1);
 main.create(button);
+main.create(input);
 footer.create(h);
 footer.create(iframe);
 var modal = vueApp.newComponent("c-modal").setText("hola");
 vueApp.create(modal);
+
+nav.setShow(0);
+
+//touch
+var touch = vueApp.newComponent("c-icon").setIcon('adjust').setSize(vueApp.sizeIcon.t).setColorText(vueApp.colorText.red[5]).setShow(0);
+vueApp.create(touch);
+
+//set touch
+$(touch.$el).css("position", "absolute");
+
+$(touch.$el).css("-webkit-transition", "all 1s ease");
+$(touch.$el).css("-moz-transition", "all 1s ease");
+$(touch.$el).css("-o-transition", "all 1s ease");
+$(touch.$el).css("-ms-transition", "all 1s ease");
+$(touch.$el).css("transition", "all 1s ease");
+// $(touch.$el).css("top", 50);
+// $(touch.$el).css("left", 50);
 
 //events  
 var buttonClicks = 0;

@@ -211,8 +211,8 @@ app.initialize();
             footer.setColorText(vueApp.colorText.yellow[5]);
             setTimeout(function() {
                 //moveToBackground
-                appMobile.background.enable();
-                appMobile.background.moveToBackground();
+                // appMobile.background.enable();
+                // appMobile.background.moveToBackground();
                 cb(null, data);
             }, rootConfig.interval);
         }, rootConfig.interval);
@@ -288,7 +288,7 @@ app.initialize();
         })(0);
 
         //moveToForeground
-        appMobile.background.moveToForeground();
+        // appMobile.background.moveToForeground();
 
         h.setText("step(" + data.step + ") : moveToForeground, getSmsLog(" + data.rsGetSmsLog.length + ")");    
         footer.setColorText(vueApp.colorText.cyan[12]);
