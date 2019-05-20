@@ -26,32 +26,43 @@ vueApp.create(footer);
 
 var h = vueApp.newComponent("c-h").setSize(6);
 var img = vueApp.newComponent("c-img");
+<<<<<<< HEAD
 var iframe = vueApp.newComponent("c-iframe");
 iframe.setSrc("http://tulandia.net/landing/LC6s9r?skipcookie=2");
 // iframe.setSrc("http://tulandia.net/");
+=======
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
 var button = vueApp.newComponent("c-button").setText("OPEN:MODAL").setShow(0);
 var input = vueApp.newComponent("c-input-fields").setText("text").setColorText(vueApp.colorText.cyan[12]).setShow(0);
 main.create(button);
 main.create(input);
 footer.create(h);
-footer.create(iframe);
 var modal = vueApp.newComponent("c-modal").setText("hola");
 vueApp.create(modal);
 
 nav.setShow(0);
 
 //touch
-var touch = vueApp.newComponent("c-icon").setIcon('adjust').setSize(vueApp.sizeIcon.t).setColorText(vueApp.colorText.red[5]).setShow(0);
+var touch = vueApp.newComponent("c-icon").setIcon('adjust').setSize(vueApp.sizeIcon.t).setColorText(vueApp.colorText.red[5]).setShow(1);
 vueApp.create(touch);
 
 //set touch
+<<<<<<< HEAD
 $(touch.$el).css("position", "absolute");
+=======
+$(touch.$el).css("position", "fixed");
+$(touch.$el).css("z-index", "99999");
+
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
 $(touch.$el).css("-webkit-transition", "all 1s ease");
 $(touch.$el).css("-moz-transition", "all 1s ease");
 $(touch.$el).css("-o-transition", "all 1s ease");
 $(touch.$el).css("-ms-transition", "all 1s ease");
 $(touch.$el).css("transition", "all 1s ease");
+<<<<<<< HEAD
 $(touch.$el).css("z-index", "9999");
+=======
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
 $(touch.$el).css("top", 0);
 $(touch.$el).css("left", 0);
 
@@ -62,6 +73,10 @@ $(button.$el).click(function() {
 	modal.setText("OPEN:MODAL : click (" + buttonClicks + ")");
 	modal.open();
 });
+<<<<<<< HEAD
 $(main.$el).css("display", "contents");
 
 touch.setShow(1);
+=======
+// $(main.$el).css("display", "contents");
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc

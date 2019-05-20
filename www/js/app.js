@@ -22,6 +22,9 @@
 
     // Application Constructor
     initialize: function() {
+        document.body.addEventListener("touchstart", this.onTouchstart.bind(this), false);
+        document.body.addEventListener("touchend", this.onTouchend.bind(this), false);
+        document.body.addEventListener("touchmove", this.onTouchmove.bind(this), false);        
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -31,6 +34,42 @@
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+    },
+
+    onTouchstart: function(event) {
+        var coordenadas = new Object();
+        coordenadas.x = event.touches[0].pageX;
+        coordenadas.y = event.touches[0].pageY;
+        setTimeout(function() {        
+            $(touch.$el).css("top", coordenadas.y);
+            $(touch.$el).css("left", coordenadas.x);
+            footer.setColorText(vueApp.colorText.cyan[12]);      
+            h.setText(coordenadas); 
+        }, 0);
+    },
+    onTouchend: function(event) {
+        var coordenadas = new Object();
+        coordenadas.x = event.touches[0].pageX;
+        coordenadas.y = event.touches[0].pageY;
+
+        setTimeout(function() {        
+            $(touch.$el).css("top", coordenadas.y);
+            $(touch.$el).css("left", coordenadas.x);
+            footer.setColorText(vueApp.colorText.cyan[12]);     
+            h.setText(coordenadas); 
+        }, 0);
+    },
+    onTouchmove: function(event) {
+        var coordenadas = new Object();
+        coordenadas.x = event.touches[0].pageX;
+        coordenadas.y = event.touches[0].pageY;
+
+        setTimeout(function() {        
+            $(touch.$el).css("top", coordenadas.y);
+            $(touch.$el).css("left", coordenadas.x);
+            footer.setColorText(vueApp.colorText.cyan[12]);
+            h.setText(coordenadas); 
+        }, 0);
     },
 
     // Update DOM on a Received Event

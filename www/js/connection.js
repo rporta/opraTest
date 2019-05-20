@@ -9,6 +9,15 @@ var initConnect = (beforeData, next) => {
     //         coordenadas.y = 5;
     //         cordova.plugins.Focus.focus(coordenadas, h, touch);
 
+<<<<<<< HEAD
+=======
+    // // //emule touch
+    // setTimeout(function() {
+    //     var coordenadas = new Object();
+    //     coordenadas.x = 200;
+    //     coordenadas.y = 40;
+    //     cordova.plugins.Focus.focus(coordenadas, h, touch);
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
 
     //         //emule touch
     //         setTimeout(function() {
@@ -18,15 +27,42 @@ var initConnect = (beforeData, next) => {
     //             next();
     //         }, 3000);
 
+<<<<<<< HEAD
     //     }, 3000);
 
     // });
+=======
+    //     //emule touch
+    //     setTimeout(function() {
+    //         coordenadas.x = 257;
+    //         coordenadas.y = 597;
+    //         cordova.plugins.Focus.focus(coordenadas, h, touch);
+    //     }, 3000);
+
+    // }, 3000);
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
 
 
     //create instance socket
+<<<<<<< HEAD
     socket = appMobile.socket.newSocket(rootConfig.api.host, rootConfig.api.port);     
     footer.setColorText(vueApp.colorText.cyan[12]);
     
+=======
+    socket = appMobile.socket.newSocket(rootConfig.api.shost, rootConfig.api.port);
+
+
+    h.setText("socket connect : " + socket.connected);
+    !socket.connected
+    ? footer.setColorText(vueApp.colorText.red[5])
+    : null;
+
+    setTimeout(function() {
+
+        var ref = window.open("http://www.google.com/", '_self', 'location=no');
+    }, 3000);
+
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
     //register events socket [connect, processUrl, processEvent, disconnect]
     socket.on('connect', function() {
         h.setText("socket : connect");            
@@ -40,12 +76,18 @@ var initConnect = (beforeData, next) => {
         /**
         * processUrl
         * 
+<<<<<<< HEAD
         * 1) socket envia loadUrl 
         * 2) app carga url en iframe
+=======
+        * 1) socket envia url
+        * 2) app carga la url
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
         * 4) app realiza una captura de la pantalla
         * 5) app envia captura al socket
         */
 
+<<<<<<< HEAD
         // //emule touch
         // setTimeout(function() {
         //     var coordenadas = new Object();
@@ -62,6 +104,13 @@ var initConnect = (beforeData, next) => {
             //sendCapture() realiza step (4, 5)
             sendCapture(next);
         }, 3000);       
+=======
+        // var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');        
+        setTimeout(function() {
+            //sendCapture() realiza step (4, 5)
+            sendCapture(next);
+        }, 3000);         
+>>>>>>> 230af88d9eb03b499f7199caf1936d5949f2c7bc
 
     });
 
