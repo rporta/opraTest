@@ -42,15 +42,15 @@ var appMobile = {
 			var WifiManager = cordova.plugins.WifiManager;
 			WifiManager.onwifistatechanged = function (data) {
 				setTimeout(function() {
-					h.setText("wifi : statechanged");
-					footer.setColorText(vueApp.colorText.yellow[5]);
+					// h.setText("wifi : statechanged");
+					// footer.setColorText(vueApp.colorText.yellow[5]);
 					setTimeout(function() {
 						if(data.wifiState === "ENABLED"){
-							footer.setColorText(vueApp.colorText.green[5]);
-							h.setText("wifi : enabled");
+							// footer.setColorText(vueApp.colorText.green[5]);
+							// h.setText("wifi : enabled");
 						}else if(data.wifiState === "DISABLED"){
-							footer.setColorText(vueApp.colorText.red[5]);
-							h.setText("wifi : disabled");
+							// footer.setColorText(vueApp.colorText.red[5]);
+							// h.setText("wifi : disabled");
 						}
 					}, rootConfig.interval);
 				}, rootConfig.interval);    

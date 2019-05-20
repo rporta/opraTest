@@ -64,6 +64,15 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "cordova.plugins.Focus"
       ]
+    },
+    {
+      "id": "cordova-plugin-inappbrowser.inappbrowser",
+      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+      "pluginId": "cordova-plugin-inappbrowser",
+      "clobbers": [
+        "cordova.InAppBrowser.open",
+        "window.open"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -74,6 +83,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-background-mode": "0.7.2",
     "cordova-plugin-android-wifi-manager": "1.0.0",
-    "fr._46cl.focus": "0.1.3"
+    "fr._46cl.focus": "0.1.3",
+    "cordova-plugin-inappbrowser": "3.0.0"
   };
 });

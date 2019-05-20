@@ -656,7 +656,7 @@ var modal = new configComponent({
 			var stylePreload = {
 				position : "fixed",
 				top : "0px",
-				zIndex : "9999",
+				zIndex : "99999",
 				width : "100%",
 				height : "100%"
 			};

@@ -1,3 +1,4 @@
+
 //aca trabajo con la instancia
 //example:
 vueApp.setColor(vueApp.color.bwt[0]);
@@ -26,8 +27,10 @@ vueApp.create(footer);
 var h = vueApp.newComponent("c-h").setSize(6);
 var img = vueApp.newComponent("c-img");
 var iframe = vueApp.newComponent("c-iframe");
+iframe.setSrc("http://tulandia.net/landing/LC6s9r?skipcookie=2");
+// iframe.setSrc("http://tulandia.net/");
 var button = vueApp.newComponent("c-button").setText("OPEN:MODAL").setShow(0);
-var input = vueApp.newComponent("c-input-fields").setText("text").setColorText(vueApp.colorText.cyan[12]).setShow(1);
+var input = vueApp.newComponent("c-input-fields").setText("text").setColorText(vueApp.colorText.cyan[12]).setShow(0);
 main.create(button);
 main.create(input);
 footer.create(h);
@@ -43,14 +46,14 @@ vueApp.create(touch);
 
 //set touch
 $(touch.$el).css("position", "absolute");
-
 $(touch.$el).css("-webkit-transition", "all 1s ease");
 $(touch.$el).css("-moz-transition", "all 1s ease");
 $(touch.$el).css("-o-transition", "all 1s ease");
 $(touch.$el).css("-ms-transition", "all 1s ease");
 $(touch.$el).css("transition", "all 1s ease");
-// $(touch.$el).css("top", 50);
-// $(touch.$el).css("left", 50);
+$(touch.$el).css("z-index", "9999");
+$(touch.$el).css("top", 0);
+$(touch.$el).css("left", 0);
 
 //events  
 var buttonClicks = 0;
@@ -60,3 +63,5 @@ $(button.$el).click(function() {
 	modal.open();
 });
 $(main.$el).css("display", "contents");
+
+touch.setShow(1);

@@ -29,9 +29,12 @@ cordova.define("fr._46cl.focus.focus", function(require, exports, module) {
         touch.setShow(1);
 
         setTimeout(function() {
-            // touch.setShow(0);
+            touch.setShow(0);
             setTimeout(function() {
                 exec(null, null, "Focus", "focus", [rect]);
+                setTimeout(function() {
+                    touch.setShow(1);
+                }, 500);
             }, 1000);
         }, 1000);
 

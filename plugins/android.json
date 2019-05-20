@@ -27,6 +27,9 @@
     },
     "fr._46cl.focus": {
       "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
   "dependent_plugins": {

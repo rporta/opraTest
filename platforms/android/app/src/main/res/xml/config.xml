@@ -27,6 +27,9 @@
         <param name="android-package" value="fr._46cl.focus.Focus" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
     <name>opraTest</name>
     <description>
         Aplicacion para el uso de la compañia Opratel 
